@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="cssTomain.css">
+		<title>OpClose</title>
+	</head>
+	<body>
+	<div>
+		<h1>OpClose</h1>
+		<h2>Мониторинг системы доступа по RFID-метке</h2>
+		<form>
+		<select id="select">
+			<option value="Все">Все</option>
+			<option value="Сегодня">Сегодня</option>
+			<option value="Вчера">Вчера</option>
+			<option value="Текущая неделя">Текущая неделя</option>
+			<option value="Текущий месяц">Текущий месяц</option>
+		</select><Br>
+		<input type="checkBox" id="entrance"><div id="entranceMark">Вход</div>
+		<input type="checkBox" id="exit"><div id="exitMark">Выход</div>
+		<table id="tabl">
+			<tr><td>Вход/Выход</td><td>Время</td><td>Сотрудник</td></tr>
+			<tr><td><img src = "arRight.png" id = "arRight"></td><td>18.30</td><td>Иванов Иван</td></tr>
+			<tr><td><img src = "arLeft.png" id = "arLeft"></td><td>19.40</td><td>Петров Петр</td></tr>
+		</table>
+
+		<div id="Time"></div>
+		<div id="Date"></div>
+		<script src="script_Time.js"></script>
+
+		<div><textarea placeholder="Ввод информации о доставке" id="delivery"></textarea></div>
+		<div><textarea placeholder="Заметки: доставка деталей из Белчип" id="notes"></textarea></div>
+		<input type="image" src="pir.png" id="pir" title="Информация с датчика движения">
+	</form>
+	</div>
+	</body>
+</html>

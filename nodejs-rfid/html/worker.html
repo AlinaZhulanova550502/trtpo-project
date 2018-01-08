@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="cssToWorker.css">
+		<title>OpClose</title>
+	</head>
+	<body>
+	<div>
+		<h1>OpClose</h1>
+		<h2>Мониторинг системы доступа по RFID-метке</h2>
+		<form>
+		<img id="foto">
+		<h3 id="fio"></h3>
+		<div><textarea disabled placeholder="Информация о сотруднике" id="StaticInfo"></textarea></div>
+		<button type="button" id="back">Вернуться к статистике</button>
+		<table id="tabl">
+			<tr><td>Вход/Выход</td><td>Время</td></tr>
+			<tr><td><img src = "arRight.png" id = "arRight"></td><td>18.30</td></tr>
+			<tr><td><img src = "arLeft.png" id = "arLeft"></td><td>19.40</td></tr>
+		</table>
+		<div id="information">
+			<div>Ждет ответа от компании "Браво".
+				<input type="image" class="delete" src="delete.png" title="Удалить"><hr align="left"></div>
+			<div>Работает с Андреем Ждановым.
+				<input type="image" class="delete" src="delete.png" title="Удалить"><hr align="left"></div>
+			<div>Была оштрафована за курение на рабочем месте.
+				<input type="image" class="delete" src="delete.png" title="Удалить"><hr align="left"></div>
+		</div>
+
+		<div id="workTitle">На рабочем месте в течение</div>
+		<script src="script_Worker.js"></script>
+	</form>
+	</div>
+	</body>
+</html>

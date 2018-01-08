@@ -1,0 +1,135 @@
+body{
+	background: whitesmoke;
+}
+
+h1{
+	font-size: 40;
+	color: seagreen;
+}
+
+h2{
+	font-size: 32;
+	color: seagreen;
+	margin-left: 250px;
+	position: absolute; 
+  	top: 10px; 
+	left: 10px;
+}
+
+textarea{
+	font-size: 15;
+	background: whitesmoke;
+	border-color: seagreen;
+	margin: 20px auto;
+	position: absolute; 
+}
+
+#delivery{
+	visibility: hidden;
+	width: 250px;
+	height: 60px;
+	top: 150px; 
+  	left: 1000px;
+}
+
+#notes{
+	width: 250px;
+	height: 250px;
+	top: 230px; 
+  	left: 1000px;
+}
+
+form{
+	position: relative;
+	font-family: Helvetica;
+	font-size: 13;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background: darkseagreen;
+	height: 80%;
+}
+
+button{
+	margin-left: 250px;
+}
+
+table {
+	margin-left: 250px;
+	color: black;
+	width: 50%; 		/* Ширина таблицы */
+    background: seagreen;
+    color: seagreen; 		/* Цвет текста */
+    border-spacing: 2px; /* Расстояние между ячейками */
+}
+   			
+td, th {
+    background: whitesmoke; /* Цвет фона ячеек */
+   	padding: 5px; 		/* Поля вокруг текста */
+}
+
+img {
+	width: 50px;
+	height: 30px;
+	}
+
+select{
+	background: whitesmoke;
+	position: absolute; 
+  	top: 10px; 
+  	left: 10px;
+}
+
+#entrance{
+	position: absolute; 
+  	top: 60px; 
+  	left: 10px;
+}
+
+#exit{
+	position: absolute; 
+  	top: 80px; 
+  	left: 10px;
+}
+
+#entranceMark{
+	color: dimgray;
+	position: absolute; 
+  	top: 60px; 
+  	left: 30px;
+}
+
+#exitMark{
+	color: dimgray;
+	position: absolute; 
+  	top: 80px; 
+  	left: 30px;
+}
+
+#Time{
+	font-size: 32;
+	color: dimgray;
+	position: absolute; 
+  	top: 10px; 
+  	left: 1000px;
+}
+
+#Date{
+	font-size: 32;
+	color: dimgray;
+	position: absolute; 
+  	top: 50px; 
+	left: 1000px;
+}
+
+#pir{
+	height: 40px;
+	width: 40px;
+	position: absolute; 
+  	top: 300px; 
+	left: 30px;
+}
+
+.noteIm{
+	width: 15px;
+	height: 15px;
+}

@@ -1,0 +1,99 @@
+[
+	{
+		"photo": "smirnov.png",
+		"name": "Иван",
+		"surname": "Смирнов",
+		"second_name": "Васильевич",
+		"email": "ivan.smirnov@gmail.com",
+		"uid": "A234716B",
+		"login": "01",
+		"position": "директор",
+		"place": "К505",
+		"wh": "09.00-16.00",
+
+		"notes": [ 
+			{
+				"num": 1,
+				"note": "Курил на рабочем месте"
+			},
+			{
+				"num": 2,
+				"note": "Уходит в отпуск 20.01"
+			}
+		],
+		"statistics": [
+			{
+				"date": "2018-01-01",
+				"hours": "6 ч 35 мин"
+			},
+			{
+				"date": "2018-03-01",
+				"hours": "5 ч 32 мин"
+			}
+		]
+	},
+
+	{
+		"photo": "ivanov.png",
+		"name": "Петр",
+		"surname": "Иванов",
+		"second_name": "Федорович",
+		"email": "ivanov@gmail.com",
+		"uid": "A216716B",
+		"login": "02",
+		"position": "секретарь",
+		"place": "приемная",
+		"wh": "08.00-17.00",
+
+		"notes": [ 
+			{
+				"num": 1,
+				"note": "Работал в ночную смену 03.01"
+			},
+			{
+				"num": 2,
+				"note": "Отпросился 12.01 с 13.00"
+			}
+		],
+		"statistics": [
+			{
+				"date": "2018-01-01",
+				"hours": "6 ч 35 мин"
+			},
+			{
+				"date": "2018-03-01",
+				"hours": "5 ч 32 мин"
+			}
+		]
+	},
+
+	{
+		"photo": "sots.png",
+		"name": "Алла",
+		"surname": "Соц",
+		"second_name": "Евгеньевна",
+		"email": "alla.sots@gmail.com",
+		"uid": "A234106B",
+		"login": "03",
+		"position": "уборщица",
+		"place": "К01",
+		"wh": "06.00-10.00",
+
+		"notes": [ 
+			{
+				"num": 1,
+				"note": "Премия за участие в конкурсе"
+			}
+		],
+		"statistics": [
+			{
+				"date": "2018-01-01",
+				"hours": "6 ч 35 мин"
+			},
+			{
+				"date": "2018-03-01",
+				"hours": "5 ч 32 мин"
+			}
+		]
+	}
+]

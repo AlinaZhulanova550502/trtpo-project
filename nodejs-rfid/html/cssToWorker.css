@@ -1,0 +1,128 @@
+body{
+	background: whitesmoke;
+}
+
+h1{
+	font-size: 40;
+	color: seagreen;
+}
+
+h2{
+	font-size: 32;
+	color: seagreen;
+	margin-left: 250px;
+	position: absolute; 
+  	top: 10px; 
+	left: 10px;
+}
+
+h3{
+	font-family: Helvetica;
+	font-size: 28;
+	color: seagreen;
+	margin-left: 300px;
+	position: absolute; 
+  	top: 0px; 
+	left: 10px;
+}
+
+hr{
+	width: 500px;
+	color: white;
+}
+
+textarea{
+	font-size: 15;
+	background: whitesmoke;
+	border-color: seagreen;
+	margin: 20px auto;
+	position: absolute; 
+}
+
+#StaticInfo{
+	width: 220px;
+	height: 200px;
+	top: 310px; 
+  	left: 30px;
+}
+
+form{
+	position: relative;
+	font-family: Helvetica;
+	font-size: 13;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background: darkseagreen;
+	height: 100%;
+}
+
+button{
+	margin-left: 250px;
+	background: whitesmoke;
+	height: 25px;
+}
+
+table{
+	margin-left: 300px;
+	color: black;
+	width: 30%; 		/* Ширина таблицы */
+    background: seagreen;
+    color: seagreen; 		/* Цвет текста */
+    border-spacing: 2px; /* Расстояние между ячейками */
+    position: absolute; 
+  	top: 100px; 
+}
+   			
+td, th{
+    background: whitesmoke; /* Цвет фона ячеек */
+   	padding: 5px; 		/* Поля вокруг текста */
+}
+
+img{
+	width: 50px;
+	height: 30px;
+}
+
+#foto{
+	width: 200px;
+	height: 290px;
+	position: absolute; 
+  	top: 10px; 
+  	left: 30px;
+}
+
+#information{
+	font-size: 15;
+	position: relative; 
+  	top: 200px; 
+	left: 800px;
+}
+
+.delete{
+	height: 15;
+	width: 15;
+	position: relative; 
+  	top: 0px; 
+	left: 0px;
+}
+
+#calendar{
+	position: absolute; 
+  	top: 70px; 
+	left: 800px;
+}
+
+#back{
+	position: absolute; 
+  	top: 70px; 
+	left: 800px;
+}
+
+#workTitle{
+	position: absolute; 
+  	top: 400px; 
+	left: 800px;
+	font-family: Helvetica;
+	font-size: 28;
+	color: dimgray;
+}
