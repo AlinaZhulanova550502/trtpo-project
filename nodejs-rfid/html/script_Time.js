@@ -147,7 +147,7 @@ var loadDataToTable = function(data, flagEnter, flagExit)
 	table.innerHTML='<tr><td>Вход/Выход</td><td>Время</td><td>Сотрудник</td></tr>';
 	if ((flagEnter==1) && (flagExit==1)) 
  	data.forEach(function(elem, num){
- 		table.innerHTML+='<tr><td><img src = '+chooseImg(elem.ent)+'></td><td>'+elem.time+'</td><td><a href="worker.html">'+elem.worker+'</a></td></tr>';
+ 		table.innerHTML+='<tr><td><img src = '+chooseImg(elem.ent)+'></td><td>'+elem.time+'</td><td><a href="worker.html?rfid='+elem.rfid+'">'+elem.worker+'</a></td></tr>';
 	});
 
 	else if (flagEnter==1)
@@ -211,31 +211,6 @@ var xhr = new XMLHttpRequest();
 		command(enter, exit, newlist);
 	}
 	eventToSelect(select);
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-	var trs = document.getElementsByTagName("tr");			//все строки
-	for(i=1; i<trs.length; i++){
-		var notes = new Array();
-		var myNote = document.getElementById("delivery");	//текстовое поле
-		trs[i].addEventListener("click", function(){		//для каждой строки при щелчке отображение поля ввода
-			var tr = this;
-			console.log(myNote);
-			myNote.style.visibility = "visible";			//отобразить
-			myNote.addEventListener("keypress", function(e){	//обработка нажатия энтера
-				if(e.keyCode==13) {
-					if (tr.cells[1].childNodes.length<2) tr.cells[1].innerHTML += '<img class="noteIm" src="note.png">';	//вставка ярлыка заметки
-					myNote.style.visibility = "hidden";			//спрятать поле ввода
-					str=myNote.value;
-					notes.push(str);
-					myNote.value='';
-					tr.cells[1].lastChild.addEventListener("click", function(){
-						myNote.style.disabled="disabled";
-						myNote.value=notes[notes.length-1];
-					})	//где и как хранить эти заметки?
-				}
-			})
-		})
-	}
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
  }

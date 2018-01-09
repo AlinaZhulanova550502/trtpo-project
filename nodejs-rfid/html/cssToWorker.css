@@ -31,15 +31,16 @@ hr{
 	color: white;
 }
 
-textarea{
+#StaticInfo{
 	font-size: 15;
 	background: whitesmoke;
 	border-color: seagreen;
 	margin: 20px auto;
-	position: absolute; 
-}
+	position: absolute;
+	padding-left: 10px;
+	padding-top: 10px;
+	color: seagreen;
 
-#StaticInfo{
 	width: 220px;
 	height: 200px;
 	top: 310px; 
@@ -71,8 +72,8 @@ table{
     border-spacing: 2px; /* Расстояние между ячейками */
     position: absolute; 
   	top: 100px; 
-}
-   			
+} 	
+
 td, th{
     background: whitesmoke; /* Цвет фона ячеек */
    	padding: 5px; 		/* Поля вокруг текста */
@@ -81,6 +82,10 @@ td, th{
 img{
 	width: 50px;
 	height: 30px;
+}
+  
+#stat{
+	left: 500px;
 }
 
 #foto{
