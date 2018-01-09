@@ -131,3 +131,9 @@ img{
 	font-size: 28;
 	color: dimgray;
 }
+
+#btn{
+	position: absolute; 
+  	top: 70px; 
+	left: 700px;
+}

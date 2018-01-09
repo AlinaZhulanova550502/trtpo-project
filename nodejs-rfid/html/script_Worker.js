@@ -19,9 +19,17 @@ var chooseImg = function(ent){
 
 var loadDataToTable = function(data)			//аргумент список вх/вых
 {
-	table.innerHTML='<tr><td>Вход/Выход</td><td>Время</td></tr>';
+	table.innerHTML='<tr><td>Вход/выход</td><td>Время</td></tr>';
  	data.forEach(function(elem, num){
  		table.innerHTML+='<tr><td><img src = '+chooseImg(elem.ent)+'></td><td>'+elem.time+'</td></tr>';
+	});
+}
+
+var loadDataToTableStat = function(stat)			//аргумент список вх/вых
+{
+	table.innerHTML='<tr><td>Дата</td><td>Время работы</td></tr>';
+ 	stat.forEach(function(elem, num){
+ 		table.innerHTML+='<tr><td>'+elem.date+'</td><td>'+elem.time+'</td></tr>';
 	});
 }
 
@@ -90,8 +98,8 @@ var makeStat = function(ent, stat){
 		dayStat.date = oneDay;
 		dayStat.time = time;
 		stat.push(dayStat);
+		loadDataToTableStat(stat);
 	}
-	return stat;
 }
 
 
@@ -104,7 +112,7 @@ var makeStat = function(ent, stat){
  	loadStaticInfo(worker);
 
  	//var stat = new Array();
-	//console.log(makeStat(inp, stat));
+	//makeStat(inp, stat));
  }
 
 xhr.send(null);

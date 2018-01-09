@@ -26,11 +26,11 @@
 	},
 
 	{
-		"photo": "sots.png",
+		"photo": "pirozhkova.jpg",
 		"name": "Алла",
 		"surname": "Пирожкова",
 		"second_name": "Евгеньевна",
-		"email": "alla.sots@gmail.com",
+		"email": "alla.p@gmail.com",
 		"rfid": "12345676",
 		"login": "03",
 		"position": "уборщица",
