@@ -21,7 +21,7 @@ checkName = function(text, nm){
 		if(ref!=null) fullName += ref[0];
 		nm.value = fullName;
 	}
-	if(fullName=='') 
+	if(fullName=='')
 	{
 		alert("Неверный ввод имени/фамилии/отчества");
 		nm.value = '';
@@ -31,7 +31,7 @@ checkName = function(text, nm){
 checkWH = function(){
 	ref = whF.match(/[0,1]\d.[0-3]0-1\d.[0-3]0/);
 	if (ref!=null) return;
-	else 
+	else
 	{
 		alert("Неверный ввод рабочих часов");
 		wh.value = '';
@@ -87,17 +87,25 @@ wh.addEventListener('input', function(){whF = wh.value});
 wh.addEventListener('blur', checkWH);
 
 btn.addEventListener('click', function(){
-	alert("Форма отправлена");
-
 	var xhr = new XMLHttpRequest();
-	var body = 'nm=' + encodeURIComponent(nm.value) + '&surname=' + encodeURIComponent(surname.value)+
-	+ '&secondname=' + encodeURIComponent(secondname.value)+ '&photo=' + encodeURIComponent(photo.value)+
-	+ '&position=' + encodeURIComponent(position.value) + '&place=' + encodeURIComponent(place.value) + 
-	'&email=' + encodeURIComponent(email.value) + '&wh=' + encodeURIComponent(wh.value);
+	var bodyJson = {
+		'name': nm.value,
+		'surname': surname.value,
+		'second_name': secondname.value,
+		'photo': photo.value,
+		'position': position.value,
+		'place': place.value,
+		'email': email.value,
+		'wh': wh.value
+	};
 
 	xhr.open("POST", '/submit', true);
-	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xhr.setRequestHeader('Content-Type', "application/json");
 
-	//xhr.onreadystatechange = ...;
-	xhr.send(body);
+	// xhr.onreadystatechange = function(){
+	// 	alert("Пользователь зарегистрирован");
+	// };
+	xhr.send(JSON.stringify(bodyJson));
+
+	alert("Форма отправлена");
 })

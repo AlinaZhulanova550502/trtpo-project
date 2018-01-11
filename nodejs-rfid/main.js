@@ -5,6 +5,7 @@ var path = require('path');
 // Work with db (connect)
 var mysql = require('mysql');
 
+var bodyParser = require('body-parser');
 // template parser, uses by express
 var mustache = require('mustache')
 var express = require('express');
@@ -53,6 +54,12 @@ var mysqlRunQuery = function (query, callback) {
 //--------------------------------------------------
 //              ExpressJS config
 //--------------------------------------------------
+
+app.use(bodyParser.json());       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+
 // static content redirecting
 app.use(express.static('static_content'));
 
@@ -108,7 +115,26 @@ var returnEnterJson = function (req, res) {
     mysqlDb + "." + mysqlEnterTable + ".rfid) as worker " +
     mysqlFrom(mysqlDb, mysqlEnterTable),
     function(queryRes) {
-      res.send(queryRes);
+      res.send(queryRes.reverse());
+    });
+}
+
+var regUser = function(req, res) {
+  var user = req.body;
+  var queryRes = mysqlRunQuery("INSERT INTO `" + mysqlDb + "`.`" + mysqlWorkerTable +
+    "` (`photo`, `name`, `surname`, `second_name`, `email`, `rfid`, `login`, `position`, `place`, `wh`) VALUES (" +
+      '"' + user.photo + '",' +
+      '"' + user.name + '",' +
+      '"' + user.surname + '",' +
+      '"' + user.second_name + '",' +
+      '"' + user.email + '",' +
+      '"' + user.rfid + '",' +
+      '"' + user.login + '",' +
+      '"' + user.position + '",' +
+      '"' + user.place + '",' +
+      '"' + user.wh + '");',
+    function(queryRes) {
+      res.end();
     });
 }
 
@@ -126,6 +152,9 @@ app.get('/enter.json', function (req, res) {
 });
 app.get('/*', function (req, res) {
   returnPage(req, res, "." + url.parse(req.url, true).pathname);
+});
+app.post('/submit', function (req, res) {
+  regUser(req, res);
 });
 
 //TODO: fix server port
