@@ -1,9 +1,9 @@
-
 var fio = document.getElementById("fio");
 var info = document.getElementById("StaticInfo");
 var foto = document.getElementById("foto");
 
 var table = document.getElementById("tabl");
+var tabSt = document.getElementById("stat");
 
 var loadStaticInfo = function(worker)
 {
@@ -27,18 +27,18 @@ var loadDataToTable = function(data)			//аргумент список вх/вы
 
 var loadDataToTableStat = function(stat)			//аргумент список вх/вых
 {
-	table.innerHTML='<tr><td>Дата</td><td>Время работы</td></tr>';
+	tabSt.innerHTML='<tr><td>Дата</td><td>Время работы</td></tr>';
  	stat.forEach(function(elem, num){
- 		table.innerHTML+='<tr><td>'+elem.date+'</td><td>'+elem.time+'</td></tr>';
+ 		if (elem.time=='00.00') tabSt.innerHTML+='<tr><td>'+elem.date+'</td><td>error</td></tr>';
+ 		else tabSt.innerHTML+='<tr><td>'+elem.date+'</td><td>'+elem.time+'</td></tr>';
 	});
 }
 
 var calcInterval = function(outTime, inpTime){
-	console.log(outTime);
-	console.log(inpTime);
-	hours = parseInt(outTime.substring(0,2))-parseInt(inpTime.substring(0,2));
-	minOut = parseInt(outTime.substring(3,5));
-	minIn = parseInt(inpTime.substring(3,5));
+	hours = parseInt(outTime.time.substring(0,2))-parseInt(inpTime.time.substring(0,2));
+	console.log(hours);
+	minOut = parseInt(outTime.time.substring(3,5));
+	minIn = parseInt(inpTime.time.substring(3,5));
 	if (minOut-minIn<0){
 		hours--;
 		min = minOut+60-minIn;
@@ -46,6 +46,7 @@ var calcInterval = function(outTime, inpTime){
 	else min = minOut-minIn;
 	if (hours<10) hours='0'+hours;
 	if (min<10) min='0'+min;
+	console.log(hours+'.'+min);
 	return hours+'.'+min;
 }
 
@@ -63,36 +64,33 @@ var addInterval = function(one, two){
 	return hours+'.'+min;
 }
 
-//тест статистики
-var inp = new Array({ent: 0, time: "18.09 06-октября-2017"}, {ent: 1, time: "14.03 06-октября-2017"}, {ent: 0, time: "17.20 07-октября-2017"}, {ent:1, time: "14.43 07-октября-2017"});
-
 var makeStat = function(ent, stat){
-	while(ent.length!=0)
+	while(ent.length!=0)	//итерация цикла для одной даты
 	{
 		var r = ent[0].time.match(/\d\d-[а-я]*-20\d\d/); //дата из первого элемента
 		var oneDay = r[0];
 		var day = ent.filter(function(elem){					//выбрать все входы/выходы по этой дате
 			if (elem.time.indexOf(oneDay)!=-1) return elem;
 		});
-		var inpDay = day.map(function(elem){
+		var dayCopy=day;
+		var inpDay = day.filter(function(elem){
 			if (elem.ent==1) { r = elem.time.match(/(\d\d.\d\d)/); return r[1]};			//выбрать время входов за день
 		});
-		var outDay = day.map(function(elem){
+		var outDay = dayCopy.filter(function(elem){
 			if (elem.ent==0) { r = elem.time.match(/(\d\d.\d\d)/); return r[1]};			//выбрать время выходов за день
 		});
 		var time="00.00";
-		for(i=0; i<outDay.length; i++){
-			//console.log(inpDay[i]); //??????
-			//console.log(outDay[i]);
-			//if (typeof(inpDay[i])=="undefined") break;
-			//time = addInterval(time, calcInterval(outDay[i], inpDay[i]));
+		for(i=0; i<outDay.length; i++){				//считать сумму времени за день парами вых/вх
+			if (typeof(inpDay[i])=="undefined" || typeof(outDay[i])=="undefined") {console.log("break"); break};
+			console.log(inpDay[i].time); console.log(outDay[i].time);
+			time = addInterval(time, calcInterval(outDay[i], inpDay[i]));
+			console.log("time "+ time);
 		}
-		ent = ent.map(function(elem){
+		//console.log("time "+ time);
+		
+		ent = ent.filter(function(elem){
 			if (elem.time.indexOf(oneDay)==-1) return elem;
 		})
-
-		//time = addInterval("03.58", calcInterval("18.09", "13.04")); проверка
-		//console.log("time "+ time);
 
 		dayStat = new Object();
 		dayStat.date = oneDay;
@@ -102,17 +100,30 @@ var makeStat = function(ent, stat){
 	}
 }
 
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'worker.json?rfid={{rfid}}', true);
 
- var xhr = new XMLHttpRequest();
- xhr.open('GET', 'worker.json', true);
 
- xhr.onload = function(){
- 	var workers = JSON.parse(this.responseText);
- 	var worker = workers[0];	//как-то выбрать по rfid
- 	loadStaticInfo(worker);
-
- 	//var stat = new Array();
-	//makeStat(inp, stat));
+var frid;
+xhr.onload = function(){
+ 	var workerInfo = JSON.parse(this.responseText);
+ 	loadStaticInfo(workerInfo[0]);
+ 	rfid=workerInfo[0].rfid;
  }
 
 xhr.send(null);
+
+var en = new XMLHttpRequest();
+en.open('GET', 'enter.json', true);
+en.onload = function(){
+ 	var went = JSON.parse(this.responseText);
+ 	went=went.filter(function(elem){
+ 		if (elem.rfid==rfid) return elem;
+ 	});
+ 	console.log(went);
+ 	loadDataToTable(went);
+ 	var stat = new Array();
+	makeStat(went, stat);
+ }
+
+en.send(null);

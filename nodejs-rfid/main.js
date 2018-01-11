@@ -1,4 +1,3 @@
-var http = require('http');
 var url = require('url');
 var fs = require('fs');
 var path = require('path');
@@ -6,85 +5,131 @@ var path = require('path');
 // Work with db (connect)
 var mysql = require('mysql');
 
-//config
-var htmpFolder = "html/";
-var mainPage = htmpFolder + "index.html";
-var workerPage = htmpFolder + "worker.html";
-var indexWebPage = "/";
-var workerWebPage = "/worker";
+// template parser, uses by express
+var mustache = require('mustache')
+var express = require('express');
+var app = express();
 
-var con = mysql.createConnection({
+//--------------------------------------------------
+//                Config
+//--------------------------------------------------
+var viewsFolder = "views";
+var indexPage = "index";
+var indexWebPage = "/";
+
+//--------------------------------------------------
+//              MySQL config
+//--------------------------------------------------
+var mysqlConnect = mysql.createConnection({
   host: "localhost",
-  user: "root",
+  user: "admin",
   password: "1111"
 });
 
-con.connect(function(err) {
-	if (err) throw err;
-	console.log("Connected to MySQL database successful!");
+var mysqlDb = "magic_door";
+var mysqlWorkerTable = "worker";
+var mysqlEnterTable = "enter";
+var mysqlPirTable = "pir";
+
+mysqlConnect.connect(function(err) {
+  if (err) {
+    console.error("Cannot connect to MySQL");
+    throw err;
+  }
+  console.log("Connected to MySQL database successful!");
 });
 
-// con.query("SELECT * FROM mydb.workers", function (err, result, fields) {
-// 	if (err) throw err;
-// 	console.log(result);
-// });
+var mysqlFrom = function (db, table) {
+  return (" FROM " + db + "." + table + " ");
+}
 
-// Create server
-var createServerFun = function (req, res) {
-	var requiredUrl = url.parse(req.url, true);
+var mysqlRunQuery = function (query, callback) {
+  mysqlConnect.query(query, function (err, result, fields) {
+    if (err) throw err;
+    callback(result);
+  });
+}
 
-	var filePath = "";
-	switch (requiredUrl.pathname){
-        case indexWebPage:
-            filePath = mainPage;
-            break;
-        case workerWebPage:
-            filePath = workerPage;
-            break;
-        default:
-        	filePath = htmpFolder + requiredUrl.pathname;
-            break;
-    }
+//--------------------------------------------------
+//              ExpressJS config
+//--------------------------------------------------
+// static content redirecting
+app.use(express.static('static_content'));
 
-    var extname = path.extname(filePath);
-    var contentType = 'text/html';
-    switch (extname) {
-        case '.js':
-            contentType = 'text/javascript';
-            break;
-        case '.css':
-            contentType = 'text/css';
-            break;
-        case '.json':
-            contentType = 'application/json';
-            break;
-        case '.png':
-            contentType = 'image/png';
-            break;      
-        case '.jpg':
-            contentType = 'image/jpg';
-            break;
-        case '.wav':
-            contentType = 'audio/wav';
-            break;
-    }
+var templateParser = function (filePath, options, callback) { // define the template engine
+  fs.readFile(filePath, function (err, content) {
+    if (err) return callback(new Error(err))
+  // Process view
+    var rendered = mustache.render(content.toString(), options.view, options.partials)
 
-    fs.readFile(filePath, function(err, data) {
-	    if (err) {
-	    	res.writeHead(404, {'Content-Type': 'text/html'});
-	    	res.write("Error opening " + req.url);
-	    	return res.end();
-	    }
-		
-		res.writeHead(200, {'Content-Type': contentType});
-		res.write(data);
-		return res.end();
-	});
-
-    // var q = url.parse(req.url, true).query;
-    // console.log(q);
-    // var txt = q.year + " " + q.month;
+    return callback(null, rendered)
+  })
 };
 
-http.createServer(createServerFun).listen(80);
-console.log("Server was started at port 80");
+// Adding the template engine to ExpressJS
+app.engine('html', templateParser);
+app.engine('js', templateParser);
+app.engine('json', templateParser);
+
+app.set('views', viewsFolder); // specify the views directory
+app.set('view engine', 'html'); // register the template engine
+
+var returnPage = function (req, res, filePath) {
+  var q = url.parse(req.url, true).query;
+
+  // Send response
+  res.render(filePath, {
+    'view': {
+      rfid: q.rfid
+    },
+    'partials': {// Pick up partials string content from disk
+    }
+  });
+};
+
+var returnWorkerJson = function (req, res) {
+  var rfid = url.parse(req.url, true).query.rfid;
+  var queryRes = mysqlRunQuery("SELECT * " + mysqlFrom(mysqlDb, mysqlWorkerTable) +
+    'where rfid="' + rfid + '"',
+    function(queryRes) {
+      res.send(queryRes);
+    });
+}
+var returnPirJson = function (req, res) {
+  var queryRes = mysqlRunQuery("SELECT * " + mysqlFrom(mysqlDb, mysqlPirTable),
+    function(queryRes) {
+      res.send(queryRes);
+    });
+}
+var returnEnterJson = function (req, res) {
+  var queryRes = mysqlRunQuery("SELECT *, (SELECT surname " +
+    mysqlFrom(mysqlDb, mysqlWorkerTable) +
+    " WHERE " + mysqlDb + "." + mysqlWorkerTable + ".rfid=" +
+    mysqlDb + "." + mysqlEnterTable + ".rfid) as worker " +
+    mysqlFrom(mysqlDb, mysqlEnterTable),
+    function(queryRes) {
+      res.send(queryRes);
+    });
+}
+
+app.get(indexWebPage, function (req, res) {
+  returnPage(req, res, indexPage);
+});
+app.get('/worker.json', function (req, res) {
+  returnWorkerJson(req, res);
+});
+app.get('/pir.json', function (req, res) {
+  returnPirJson(req, res);
+});
+app.get('/enter.json', function (req, res) {
+  returnEnterJson(req, res);
+});
+app.get('/*', function (req, res) {
+  returnPage(req, res, "." + url.parse(req.url, true).pathname);
+});
+
+//TODO: fix server port
+app.listen(3000, function () {
+  console.log('Server was started at port 3000!');
+});
+

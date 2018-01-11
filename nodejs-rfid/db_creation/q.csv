@@ -1,0 +1,5 @@
+id,photo,name,surname,second_name,email,rfid,login,position,place,wh
+,pirozhkova.jpg,Алла,Пирожкова,Владимировна,pirozhkova@gmail.com,0x050x7F0xAC0xA5,12345678,уборщица,К101,06.00-10.00
+,sidorov.png,Иван,Сидоров,Александрович,iv.sidorov@gmail.com,0xA50x030x5F0x08,12345677,директор,К503,10.00-17.00
+,volf.png,Эдуард,Вольф,Инокентьевич,eduard.volf@mail.ru,0x080xB30x040xA1,12345676,секретарь,приемная,09.00-18.00
+,sots.jpg,Екатерина,Соц,Николаевна,katya22@mail.ru,0x02A60x07B1,12345675,менеджер,К504,09.00-18.00

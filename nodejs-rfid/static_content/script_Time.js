@@ -152,13 +152,13 @@ var loadDataToTable = function(data, flagEnter, flagExit)
 
 	else if (flagEnter==1)
  	data.forEach(function(elem, num){
- 		if (elem.ent==1) {table.innerHTML+='<tr><td><img src = "arRight.png"></td><td>'+elem.time+'</td><td>'+elem.worker+'</td></tr>';
+ 		if (elem.ent==1) {table.innerHTML+='<tr><td><img src = "arRight.png"></td><td>'+elem.time+'</td><td><a href="worker.html?rfid='+elem.rfid+'">'+elem.worker+'</a></td></tr>';
  		}
 	});
 
  	else if (flagExit==1)
  	data.forEach(function(elem, num){
- 		if (elem.ent==0) {table.innerHTML+='<tr><td><img src = "arLeft.png"></td><td>'+elem.time+'</td><td>'+elem.worker+'</td></tr>';
+ 		if (elem.ent==0) {table.innerHTML+='<tr><td><img src = "arLeft.png"></td><td>'+elem.time+'</td><td><a href="worker.html?rfid='+elem.rfid+'">'+elem.worker+'</a></td></tr>';
 		}
 	});
 }
