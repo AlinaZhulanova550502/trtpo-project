@@ -107,5 +107,6 @@ btn.addEventListener('click', function(){
 	// };
 	xhr.send(JSON.stringify(bodyJson));
 
+	nm.value=surname.value=secondname.value=photo.value=position.value=place.value=email.value=wh.value='';
 	alert("Форма отправлена");
 })
